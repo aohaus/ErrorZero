@@ -21,6 +21,20 @@
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
+    body.night {
+      --bg: #07111f;
+      --card: #111827;
+      --ink: #f8fafc;
+      --muted: #9ca3af;
+      --line: rgba(148, 163, 184, 0.30);
+      --blue: #60a5fa;
+      --blue-dark: #93c5fd;
+      --green: #4ade80;
+      --red: #f87171;
+      --amber: #fbbf24;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.35);
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -32,6 +46,13 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
       min-height: 100vh;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    body.night {
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,0.20), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.10), transparent 30%),
+        linear-gradient(180deg, #020617 0%, var(--bg) 100%);
     }
 
     .app {
@@ -76,6 +97,19 @@
       justify-content: flex-end;
     }
 
+    .top-actions button {
+      width: 118px;
+      height: 46px;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      white-space: nowrap;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
     button {
       border: 0;
       border-radius: 16px;
@@ -101,6 +135,14 @@
     .btn-blue { background: var(--blue); color: white; box-shadow: 0 10px 22px rgba(50,103,255,0.22); }
     .btn-dark { background: #111827; color: white; }
     .btn-red { background: rgba(239,68,68,0.11); color: #b91c1c; }
+
+    .theme-toggle {
+      min-width: 118px;
+    }
+
+    body.night .btn-ghost { background: rgba(15,23,42,0.72); color: var(--ink); border-color: var(--line); }
+    body.night .btn-dark { background: #e5e7eb; color: #111827; }
+    body.night .btn-red { background: rgba(248,113,113,0.13); color: #fecaca; }
 
     .grid {
       display: grid;
@@ -534,6 +576,64 @@
 
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+
+    body.night .card {
+      background: rgba(15, 23, 42, 0.86);
+      border-color: var(--line);
+    }
+
+    body.night input {
+      background: rgba(2, 6, 23, 0.58);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    body.night .team-panel {
+      background: linear-gradient(180deg, rgba(30,41,59,0.98), rgba(15,23,42,0.98));
+      border-color: var(--line);
+    }
+
+    body.night .pending {
+      background: rgba(96,165,250,0.14);
+      color: #bfdbfe;
+    }
+
+    body.night .reason-btn,
+    body.night .chip,
+    body.night .stat-box,
+    body.night .modal {
+      background: rgba(15,23,42,0.96);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    body.night .summary-card,
+    body.night .rally-list,
+    body.night .sheet-name {
+      background: rgba(30,41,59,0.88);
+      border-color: var(--line);
+    }
+
+    body.night .sheet {
+      background: rgba(2,6,23,0.52);
+      border-color: rgba(96,165,250,0.95);
+    }
+
+    body.night .sheet-row { border-bottom-color: rgba(96,165,250,0.78); }
+    body.night .sheet-name { border-right-color: rgba(96,165,250,0.92); }
+    body.night .sheet-cell { color: #e5e7eb; border-right-color: rgba(96,165,250,0.62); }
+    body.night .sheet-cell.error-mark { background: rgba(248,113,113,.14); color: #fecaca; }
+    body.night .sheet-cell.winner-mark { background: rgba(74,222,128,.12); color: #bbf7d0; }
+
+    body.night .chip.error { color: #fecaca; border-color: rgba(248,113,113,.35); background: rgba(248,113,113,.12); }
+    body.night .chip.winner { color: #bbf7d0; border-color: rgba(74,222,128,.35); background: rgba(74,222,128,.10); }
+    body.night .reason-btn.winner { border-color: rgba(74,222,128,.38); background: rgba(74,222,128,.10); }
+    body.night .reason-btn.error { border-color: rgba(248,113,113,.32); background: rgba(248,113,113,.10); }
+    body.night .reason-btn.unknown { background: rgba(148,163,184,.12); }
+
+    body.night .bar-track { background: rgba(148,163,184,0.20); }
+    body.night .insight { background: rgba(96,165,250,0.15); color: #dbeafe; }
+
     @media (max-width: 820px) {
       .grid { grid-template-columns: 1fr; }
       header { align-items: flex-start; }
@@ -546,7 +646,7 @@
       .app { padding-left: 10px; padding-right: 10px; }
       header { flex-direction: column; }
       .top-actions { width: 100%; justify-content: stretch; }
-      .top-actions button { flex: 1; }
+      .top-actions button { flex: 1 1 0; width: auto; }
       .setup { grid-template-columns: 1fr; }
       .scoreboard { grid-template-columns: 1fr 1fr; gap: 8px; }
       .vs { display: none; }
@@ -578,6 +678,7 @@
         <p>Track every point. Eliminate every mistake.</p>
       </div>
       <div class="top-actions">
+        <button class="btn-ghost theme-toggle" id="themeToggle" aria-pressed="false">🌙 Night</button>
         <button class="btn-ghost" id="openStatsTop">Stats</button>
         <button class="btn-ghost" id="printBtn">Print</button>
       </div>
@@ -707,6 +808,7 @@
     };
     const ERROR_CODES = ['N', 'O', 'S', 'F', 'R', 'U'];
     const STORAGE_KEY = 'errorzero_mvp_state_v1';
+    const THEME_KEY = 'errorzero_theme_v1';
 
     const state = {
       score: { A: 0, B: 0 },
@@ -716,6 +818,29 @@
     };
 
     const $ = (id) => document.getElementById(id);
+
+    function applyTheme(theme) {
+      const isNight = theme === 'night';
+      document.body.classList.toggle('night', isNight);
+      const btn = $('themeToggle');
+      if (btn) {
+        btn.textContent = isNight ? '☀️ Day' : '🌙 Night';
+        btn.setAttribute('aria-pressed', String(isNight));
+      }
+    }
+
+    function toggleTheme() {
+      const next = document.body.classList.contains('night') ? 'day' : 'night';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      showToast(next === 'night' ? 'Night mode on' : 'Day mode on');
+    }
+
+    function loadTheme() {
+      let saved = 'day';
+      try { saved = localStorage.getItem(THEME_KEY) || 'day'; } catch (e) {}
+      applyTheme(saved === 'night' ? 'night' : 'day');
+    }
 
     function opponentOf(team) { return team === 'A' ? 'B' : 'A'; }
     function teamName(team) { return state.names[team] || (team === 'A' ? 'Team A' : 'Team B'); }
@@ -978,9 +1103,11 @@
     $('statsModal').addEventListener('click', (e) => {
       if (e.target === $('statsModal')) $('statsModal').classList.remove('show');
     });
+    $('themeToggle').addEventListener('click', toggleTheme);
     $('teamAName').addEventListener('input', () => { render(); save(); });
     $('teamBName').addEventListener('input', () => { render(); save(); });
 
+    loadTheme();
     load();
     render();
   </script>
